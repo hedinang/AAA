@@ -4,6 +4,7 @@ import Sidebar from './component/Sidebar';
 import { Landing } from './page/Landing';
 import './scss/style.scss'
 import './scss/navbar.scss'
+import './scss/login.scss'
 import { Chat } from './page/Chat';
 import { Login } from './page/Login';
 import { PrivateRoute } from './component/ProtectedRoute';
@@ -22,9 +23,9 @@ function App() {
           <Routes>
 
             <Route path='/login' element={
-              <CoverLogin>
-                <Login />
-              </CoverLogin>
+              // <CoverLogin>
+              <Login />
+              // </CoverLogin>
             } />
             <Route exact path='/' element={
               <PrivateRoute><Landing /></PrivateRoute>
