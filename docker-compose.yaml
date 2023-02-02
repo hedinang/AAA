@@ -4,12 +4,12 @@ services:
   backend:
     container_name: backend
     build:
-      context: .
+      context: .be
       dockerfile: Dockerfile
-    depends_on:
-      - database
-    environment:
-      PG_HOST: database
+    # depends_on:
+    #   - database
+    # environment:
+    #   PG_HOST: database
     volumes:
       - .:/app/
       - /app/node_modules
@@ -30,15 +30,15 @@ services:
     volumes:
       - ./fe/node_modules:/usr/app/node_modules
       - ./fe:/usr/app
-  database:
-    container_name: database
-    image: timescale/timescaledb-postgis:latest-pg12
-    ports:
-      - "5434:5432"
-    environment:
-      POSTGRES_USER: thminsight
-      POSTGRES_PASSWORD: coding_test_password
-      POSTGRES_DB: thm_database
-    volumes:
-      - ./sql/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
-      - ./sql/insert.sql:/docker-entrypoint-initdb.d/2-insert.sql
+  # database:
+  #   container_name: database
+  #   image: timescale/timescaledb-postgis:latest-pg12
+  #   ports:
+  #     - "5434:5432"
+  #   environment:
+  #     POSTGRES_USER: thminsight
+  #     POSTGRES_PASSWORD: coding_test_password
+  #     POSTGRES_DB: thm_database
+  #   volumes:
+  #     - ./sql/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+  #     - ./sql/insert.sql:/docker-entrypoint-initdb.d/2-insert.sql

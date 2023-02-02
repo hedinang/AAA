@@ -3,22 +3,33 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { login } from "../api/api";
 import { Content } from "antd/es/layout/layout";
 import { Formik } from "formik";
-import GoogleLogin from 'react-google-login';
-import FacebookLogin from "react-facebook-login";
-// import { useEffect } from "react";
-// import GoogleSSO from "./GoogleSSO";
-import { auth, provider } from "../config/config";
-import { signInWithPopup, signOut } from "firebase/auth";
+import { auth, google, facebook } from "../config/config";
+import { signInWithPopup, signInWithRedirect, signOut } from "firebase/auth";
 
-export const Login = (props) => {
+export const Login = () => {
+    const butttonStyle = {
+        google: {
+            backgroundColor: 'red',
+            width: '100%',
+            marginTop: '10px'
+        },
+        facebook: {
+            backgroundColor: 'blue',
+            width: '100%',
+            marginTop: '10px'
+        },
+        default: {
+            backgroundColor: 'yellow',
+            width: '100%',
+            marginTop: '10px'
+        }
+    }
 
     let initialValues = {
         username: '',
         password: ''
     }
-
-
-    const loginTypeList = ['default', 'google', 'facebook', 'test', 'logout']
+    const loginTypeList = ['default', 'google', 'facebook']
 
     const userLogin = async (values, handleSubmit) => {
         let response = await login(values)
@@ -31,96 +42,34 @@ export const Login = (props) => {
             alert('Login failed!')
 
         }
-
     }
-    const responseGoogle = response => {
-        console.log('aaa')
-        // alert(response.access_token)
 
-        // props.callback({
-        //     type: "GMAIL",
-        //     payload: response
-        // })
+    const loginGoogle = () => {
+        signInWithPopup(auth, google).then((data) => {
+            
 
-    }
-    const responseFacebook = response => {
-        console.log(response);
-
-    }
-    function handleCredentialResponse(response) {
-        console.log("Encoded JWT ID token: " + response.credential);
-    }
-    const testLogin = async() => {
-        console.log('aa')
-        await signInWithPopup(auth, provider).then((data) => {
-            console.log('aa')
             window.localStorage.setItem("user", data.user.email)
+            window.location.pathname = '/'
+        })
+    }
+    const loginFacebook = () => {
+        signInWithPopup(auth, facebook).then((data) => {
+            window.localStorage.setItem("user", data.user.email)
+            window.location.pathname = '/'
         })
     }
 
-    const logout = () => {
-        signOut(auth).then(() => {
-            // Sign-out successful.
-            console.log('aa')
-        }).catch((error) => {
-            // An error happened.
-        });
-    }
     function showLogin(e, values, handleSubmit) {
         switch (e) {
-            // case 'google':
-            //     return <GoogleLogin
-            //         style={{ color: 'red' }}
-            //         clientId="399731219295-42coi6p2nb4jo4atjnivqk0ak6c989u7.apps.googleusercontent.com"
-            //         secret='uiXMBKRMQ0OsuETAxz_08nea'
-            //         uxMode="redirect"
-            //         buttonText="Google"
-            //         redirectUri="http://localhost:3000/login"
-            //         onSuccess={responseGoogle}
-            //         onFailure={responseGoogle}
-            //         cookiePolicy={"single_host_origin"}
-            //         className="GOOGLE"
-
-            //     />
-            // case 'facebook':
-            //     return <FacebookLogin
-            //         btnContent="Facebook"
-            //         appId="1045728259369425"
-            //         fields="name,email,picture"
-
-            //         onSuccess={responseFacebook}
-            //         onFailure={responseFacebook}
-            //     />
-            case 'test':
-                // return <GoogleSSO />
-                // return <Button type="primary"  onclick={e => userLogin(values, handleSubmit)}> Login</Button>
-                return <Button type="primary" onClick={testLogin}> Login</Button>
-            case 'logout':
-                // return <GoogleSSO />
-                // return <Button type="primary"  onclick={e => userLogin(values, handleSubmit)}> Login</Button>
-                return <Button type="primary" onClick={logout}>Logout</Button>
-
+            case 'facebook':
+                return <Button style={butttonStyle.facebook} type="primary" onClick={loginFacebook}>Login by Facebook</Button>
+            case 'google':
+                return <Button style={butttonStyle.google} type="primary" onClick={loginGoogle}>Login by Google</Button>
             default:
-                return <Button type="primary"
-                    // onclick={testLogin}
-                    onClick={e => userLogin(values, handleSubmit)}
-                >Login</Button>
+                return <Button style={butttonStyle.default} type="primary" onClick={e => userLogin(values, handleSubmit)}>Login</Button>
 
         }
     }
-    // useEffect(() => {
-    //     window.onload = function () {
-    //         window.google.accounts.id.initialize({
-    //             client_id: "399731219295-42coi6p2nb4jo4atjnivqk0ak6c989u7.apps.googleusercontent.com",
-    //             callback: handleCredentialResponse
-    //         });
-    //         window.google.accounts.id.renderButton(
-    //             document.getElementById("buttonDiv"),
-    //             { theme: "outline", size: "large" }  // customization attributes
-    //         );
-    //         window.google.accounts.id.prompt(); // also display the One Tap dialog
-    //     }
-    // }, [])
     return (
         <>
             <Content >
@@ -130,7 +79,7 @@ export const Login = (props) => {
                 >
                     {({ resetForm, values, errors, touched, handleChange, handleSubmit }) => (
                         <>
-                            <Row style={{ marginTop: '30vh' }}>
+                            <Row style={{ marginTop: '15vh' }}>
                                 <Col span={9}></Col>
                                 <Col span={2}>Username</Col>
                                 <Col span={4}><Input name="username" onChange={handleChange} /></Col>

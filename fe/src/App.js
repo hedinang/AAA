@@ -23,9 +23,9 @@ function App() {
           <Routes>
 
             <Route path='/login' element={
-              // <CoverLogin>
-              <Login />
-              // </CoverLogin>
+              <CoverLogin>
+                <Login />
+              </CoverLogin>
             } />
             <Route exact path='/' element={
               <PrivateRoute><Landing /></PrivateRoute>

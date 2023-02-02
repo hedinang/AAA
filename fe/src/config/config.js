@@ -1,19 +1,20 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 const firebaseConfig = {
-    apiKey: "AIzaSyCk2xRT3KqiGDgFxAZSx5UFGnj5AoVnY50",
-    authDomain: "multi-shop-bf32d.firebaseapp.com",
-    projectId: "multi-shop-bf32d",
-    storageBucket: "multi-shop-bf32d.appspot.com",
-    messagingSenderId: "1027894183579",
-    appId: "1:1027894183579:web:a4f2c9e26ef560b360a83e",
-    measurementId: "G-MKP9355P3C"
+    apiKey: "AIzaSyDbuiLkt2Y992Hp-wdA39nB_-SgtcU6e0o",
+    authDomain: "mechanics-d2b54.firebaseapp.com",
+    projectId: "mechanics-d2b54",
+    storageBucket: "mechanics-d2b54.appspot.com",
+    messagingSenderId: "395755035508",
+    appId: "839837590443088",
+    // appSecret: '9fd27eb285daf1295977673486326b44',
+    measurementId: "G-V70PVMV6K2"
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
-const provider = new GoogleAuthProvider({
-    prompt: "select_account"
-})
-export { auth, provider };
+const google = new GoogleAuthProvider()
+const facebook = new FacebookAuthProvider();
+export { auth, google, facebook };
