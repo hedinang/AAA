@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, Col, Input, Row } from "antd"
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { login } from "../api/api";
@@ -7,6 +8,7 @@ import { auth, google, facebook } from "../config/config";
 import { signInWithPopup, signInWithRedirect, signOut } from "firebase/auth";
 
 export const Login = () => {
+    console.log(process.env.ROOT_URL)
     const butttonStyle = {
         google: {
             backgroundColor: 'red',

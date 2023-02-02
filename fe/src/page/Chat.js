@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, Col, Input, Row } from "antd"
 import TextArea from "antd/es/input/TextArea";
 import { Content } from "antd/es/layout/layout"

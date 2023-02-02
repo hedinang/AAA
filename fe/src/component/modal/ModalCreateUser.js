@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, Col, Input, Modal, Row } from "antd";
 import { Typography } from 'antd';
 import { createUser } from "../../api/api";

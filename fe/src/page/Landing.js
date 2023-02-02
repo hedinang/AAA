@@ -1,3 +1,4 @@
+import React from 'react';
 import { Col, Row, Table } from "antd"
 import { Content } from "antd/es/layout/layout"
 import { useEffect, useState } from "react";

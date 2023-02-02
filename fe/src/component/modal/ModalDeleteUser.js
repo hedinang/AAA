@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, Modal } from "antd";
 import { Typography } from 'antd';
 import { deleteUser } from "../../api/api";

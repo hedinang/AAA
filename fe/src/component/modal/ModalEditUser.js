@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, Col, Modal, Row } from "antd";
 import { Typography } from 'antd';
 import { editUser } from "../../api/api";
