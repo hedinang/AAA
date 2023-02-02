@@ -4,7 +4,7 @@ services:
   backend:
     container_name: backend
     build:
-      context: .be
+      context: ./be
       dockerfile: Dockerfile
     # depends_on:
     #   - database
@@ -24,7 +24,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    restart: unless-stopped
+    # restart: unless-stopped
     environment:
       CHOKIDAR_USEPOLLING: "true"
     volumes:
