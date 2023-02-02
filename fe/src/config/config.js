@@ -6,9 +6,9 @@ const firebaseConfig = {
     projectId: "mechanics-d2b54",
     storageBucket: "mechanics-d2b54.appspot.com",
     messagingSenderId: "395755035508",
-    appId: "839837590443088",
+    appId: "851613512730637",
     // appSecret: '9fd27eb285daf1295977673486326b44',
-    measurementId: "G-V70PVMV6K2"
+    measurementId: "G-V70PVMV6K2",
 };
 
 

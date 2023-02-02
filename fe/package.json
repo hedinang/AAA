@@ -12,12 +12,9 @@
     "firebase": "^9.16.0",
     "formik": "^2.2.9",
     "node-sass": "^7.0.3",
-    "passport-google-oauth": "^2.0.0",
     "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-facebook-login": "^4.1.1",
-    "react-google-login": "^5.2.2",
     "react-router": "^6.6.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
@@ -27,7 +24,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set HTTPS=true&&react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

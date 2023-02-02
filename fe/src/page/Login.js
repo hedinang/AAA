@@ -29,7 +29,7 @@ export const Login = () => {
         username: '',
         password: ''
     }
-    const loginTypeList = ['default', 'google', 'facebook']
+    const loginTypeList = ['default', 'google', 'facebook', 'logout']
 
     const userLogin = async (values, handleSubmit) => {
         let response = await login(values)
@@ -46,7 +46,7 @@ export const Login = () => {
 
     const loginGoogle = () => {
         signInWithPopup(auth, google).then((data) => {
-            
+
 
             window.localStorage.setItem("user", data.user.email)
             window.location.pathname = '/'
@@ -54,9 +54,13 @@ export const Login = () => {
     }
     const loginFacebook = () => {
         signInWithPopup(auth, facebook).then((data) => {
+            console.log('A: ' + data)
             window.localStorage.setItem("user", data.user.email)
             window.location.pathname = '/'
         })
+    }
+    const logout = () => {
+        signOut(auth, facebook)
     }
 
     function showLogin(e, values, handleSubmit) {
@@ -65,6 +69,8 @@ export const Login = () => {
                 return <Button style={butttonStyle.facebook} type="primary" onClick={loginFacebook}>Login by Facebook</Button>
             case 'google':
                 return <Button style={butttonStyle.google} type="primary" onClick={loginGoogle}>Login by Google</Button>
+            case 'logout':
+                return <Button style={butttonStyle.google} type="primary" onClick={logout}>Logout</Button>
             default:
                 return <Button style={butttonStyle.default} type="primary" onClick={e => userLogin(values, handleSubmit)}>Login</Button>
 
