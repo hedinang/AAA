@@ -6,32 +6,34 @@ import { Content } from "antd/es/layout/layout";
 import { Formik } from "formik";
 import { auth, google, facebook } from "../config/config";
 import { signInWithPopup, signInWithRedirect, signOut } from "firebase/auth";
+import imgFb from "../asset/img/login3rd/f2.svg";
+import imgGg from "../asset/img/login3rd/g4.svg";
 
 export const Login = () => {
     console.log(process.env.ROOT_URL)
-    const butttonStyle = {
-        google: {
-            backgroundColor: 'red',
-            width: '100%',
-            marginTop: '10px'
-        },
-        facebook: {
-            backgroundColor: 'blue',
-            width: '100%',
-            marginTop: '10px'
-        },
-        default: {
-            backgroundColor: 'yellow',
-            width: '100%',
-            marginTop: '10px'
-        }
-    }
+    // const butttonStyle = {
+    //     google: {
+    //         // backgroundColor: '#df3e2e',
+    //         // width: '100%',
+    //         // marginTop: '10px'
+    //     },
+    //     facebook: {
+    //         backgroundColor: '#312edf',
+    //         width: '100%',
+    //         marginTop: '10px'
+    //     },
+    //     default: {
+    //         backgroundColor: '#2edf33',
+    //         width: '100%',
+    //         marginTop: '10px'
+    //     }
+    // }
 
     let initialValues = {
         username: '',
         password: ''
     }
-    const loginTypeList = ['default', 'google', 'facebook', 'logout']
+    const loginTypeList = ['default', 'google', 'facebook']
 
     const userLogin = async (values, handleSubmit) => {
         let response = await login(values)
@@ -61,20 +63,25 @@ export const Login = () => {
             window.location.pathname = '/'
         })
     }
-    const logout = () => {
-        signOut(auth, facebook)
-    }
 
     function showLogin(e, values, handleSubmit) {
         switch (e) {
             case 'facebook':
-                return <Button style={butttonStyle.facebook} type="primary" onClick={loginFacebook}>Login by Facebook</Button>
+                return <Button className='btn-fb' onClick={loginFacebook}>
+                    <img className='img-login' src={imgFb} alt='facebook' />
+                    <span className="big">Facebook</span>
+                </Button>
             case 'google':
-                return <Button style={butttonStyle.google} type="primary" onClick={loginGoogle}>Login by Google</Button>
-            case 'logout':
-                return <Button style={butttonStyle.google} type="primary" onClick={logout}>Logout</Button>
+                return <Button className='btn-gg' onClick={loginGoogle}>
+                    <img className='img-login' src={imgGg} alt='google' />
+                    <span className="big">Google</span>
+                </Button>
+
             default:
-                return <Button style={butttonStyle.default} type="primary" onClick={e => userLogin(values, handleSubmit)}>Login</Button>
+                return <>
+                    <Button className='btn-default' onClick={e => userLogin(values, handleSubmit)}>Login</Button>
+                    <div className='or-login-option'>OR</div>
+                </>
 
         }
     }

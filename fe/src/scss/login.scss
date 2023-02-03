@@ -1,5 +1,57 @@
-.loginButtonGoogle {
-  background-color: red;
-  width: 100%;
+.btn-gg {
+  background-color: #df3e2e;
+  margin-top: 5px;
+  width: 125px;
+  color: white;
+}
+.btn-fb {
+  background-color: #312edf;
+  margin-top: 5px;
+  width: 125px;
+  color: white;
+}
+.btn-default {
+  background-color: #2edf33;
+  margin-top: 5px;
+  width: 125px;
+  color: white;
+}
+.or-login-option {
+  width: 125px;
+  text-align: center;
   margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.img-login {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  float: left;
+}
+
+@media all and (max-width: 1450px) {
+  .img-login {
+    width: 20px;
+    height: 20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+  }
+  .btn-gg {
+    width: 67px;
+  }
+  .or-login-option {
+    width: 67px;
+  }
+  .btn-default {
+    width: 67px;
+  }
+  .btn-fb {
+    width: 67px;
+  }
+
+  .ant-btn .big {
+    display: none;
+  }
 }

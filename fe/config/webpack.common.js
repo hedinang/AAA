@@ -1,9 +1,9 @@
 module.exports = {
    resolve: {
-      extensions: [".jsx", ".js",".ts",".tsx", ".json", ".css", ".scss", ".jpg", ".jpeg", ".png"],
+      extensions: [".jsx", ".js", ".ts", ".tsx", ".json", ".css", ".scss", ".jpg", ".jpeg", ".png", ".svg"],
       fallback: {
          "fs": false
-     },
+      },
    },
    module: {
       rules: [
@@ -11,7 +11,7 @@ module.exports = {
             test: /\.tsx?$/,
             use: 'ts-loader',
             exclude: /node_modules/,
-          },
+         },
          {
             test: /\.(png|jpe?g)$/i,
             use: [
@@ -42,6 +42,17 @@ module.exports = {
          {
             test: /\.(css|s[ac]ss)$/i,
             use: ["style-loader", "css-loader", "postcss-loader"],
+         },
+         {
+            test: /\.svg$/,
+            use: [
+               {
+                  loader: 'svg-url-loader',
+                  options: {
+                     limit: 10000,
+                  },
+               },
+            ],
          },
       ],
    },
