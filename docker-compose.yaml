@@ -11,7 +11,7 @@ services:
     # environment:
     #   PG_HOST: database
     volumes:
-      - .:/app/
+      - ./be:/app/
       - /app/node_modules
     working_dir: /app
     command: npm start
