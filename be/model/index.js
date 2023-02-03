@@ -16,7 +16,7 @@ const connection = new Sequelize({
 connection.authenticate().then(e => {
     console.log('Connect successfully')
 }).catch(f => {
-    console.log('Connect failed')
+    console.log('Connect by sequelize failed')
 })
 mongoose.connect(process.env.CONNECTION_ATLAS, {
     dbName: process.env.MONGO_DBNAME,
