@@ -25,7 +25,7 @@ const Navbar = () => {
     return (
         <>
             {user ?
-                <Header className="nav-header" style={{ backgroundColor: 'white' }}>
+                <Header className="nav-header">
                     <div className="logo">
                         <h3 className="brand-font">Brand Here</h3>
                     </div>

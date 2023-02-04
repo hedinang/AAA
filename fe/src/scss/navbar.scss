@@ -1,5 +1,16 @@
+.ant-layout .ant-layout-header {
+  background-color: white;
+  border-bottom-style: solid;
+  border-bottom-color: #001529;
+  border-bottom-width: 2px;
+}
 
-
+.ant-menu-light.ant-menu-horizontal > .ant-menu-item {
+  margin-top: -2px;
+}
+.ant-menu-light.ant-menu-horizontal > .ant-menu-submenu {
+  margin-top: -2px;
+}
 .logo {
   width: 200px;
   float: left;

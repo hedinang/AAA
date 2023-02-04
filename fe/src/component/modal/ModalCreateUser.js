@@ -77,7 +77,7 @@ export const ModalCreateUser = ({ show, close, addSuccess }) => {
                                 <Input
                                     name='name'
                                     onChange={handleChange}
-                                // value={values?.email}
+                                    value={values?.name}
                                 // onChange={e => setFieldValue('email', e.currentTarget.value)}
                                 />
                                 {errors.name && touched.name && (
@@ -90,9 +90,8 @@ export const ModalCreateUser = ({ show, close, addSuccess }) => {
                             <Col span={17} >
                                 <Input
                                     name='username'
+                                    value={values?.username}
                                     onChange={handleChange}
-                                // value={values?.password}
-                                // onChange={e => setFieldValue('password', e.currentTarget.value)}
                                 />
                                 {errors.username && touched.username && (
                                     <div className="input-feedback">{errors.password}</div>
@@ -103,10 +102,9 @@ export const ModalCreateUser = ({ show, close, addSuccess }) => {
                             <Col span={7} ><Text strong> Password:</Text></Col>
                             <Col span={17} >
                                 <Input
-                                    // value={values?.firstName}
                                     name='password'
+                                    value={values?.password}
                                     onChange={handleChange}
-                                // onChange={e => setFieldValue('firstName', e.currentTarget.value)}
                                 />
                                 {errors.password && touched.password && (
                                     <div className="input-feedback">{errors.firstName}</div>

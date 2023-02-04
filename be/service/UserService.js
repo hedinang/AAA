@@ -1,4 +1,5 @@
 const mongodb = require('../model/index')
+var uuid = require('uuid');
 
 async function getAll() {
     let apiResponse = {}
@@ -47,6 +48,7 @@ async function createUser(data) {
         apiResponse.status = 'Bad Request'
     } else {
         try {
+            data.id = uuid.v4()
             let result = await mongodb.User.create(data)
             apiResponse.status = 'OK'
         } catch (error) {

@@ -10,25 +10,6 @@ import imgFb from "../asset/img/login3rd/f2.svg";
 import imgGg from "../asset/img/login3rd/g4.svg";
 
 export const Login = () => {
-    console.log(process.env.ROOT_URL)
-    // const butttonStyle = {
-    //     google: {
-    //         // backgroundColor: '#df3e2e',
-    //         // width: '100%',
-    //         // marginTop: '10px'
-    //     },
-    //     facebook: {
-    //         backgroundColor: '#312edf',
-    //         width: '100%',
-    //         marginTop: '10px'
-    //     },
-    //     default: {
-    //         backgroundColor: '#2edf33',
-    //         width: '100%',
-    //         marginTop: '10px'
-    //     }
-    // }
-
     let initialValues = {
         username: '',
         password: ''
@@ -44,7 +25,6 @@ export const Login = () => {
             window.location.pathname = '/'
         } else {
             alert('Login failed!')
-
         }
     }
 
@@ -95,24 +75,24 @@ export const Login = () => {
                     {({ resetForm, values, errors, touched, handleChange, handleSubmit }) => (
                         <>
                             <Row style={{ marginTop: '15vh' }}>
-                                <Col span={9}></Col>
-                                <Col span={2}>Username</Col>
-                                <Col span={4}><Input name="username" onChange={handleChange} /></Col>
-                                <Col span={9}></Col>
+                                <Col lg={9} sm={2} xs={0}></Col>
+                                <Col lg={2} sm={6} xs={10}>Username</Col>
+                                <Col lg={4} sm={14} xs={14}><Input name="username" onChange={handleChange} /></Col>
+                                <Col lg={9} sm={2} xs={0}></Col>
                             </Row>
                             <Row style={{ marginTop: '1vh' }}>
-                                <Col span={9}></Col>
-                                <Col span={2}>Password</Col>
-                                <Col span={4}><Input.Password name="password" onChange={handleChange}
+                                <Col lg={9} sm={2} xs={0}></Col>
+                                <Col lg={2} sm={6} xs={10}>Password</Col>
+                                <Col lg={4} sm={14} xs={14}><Input.Password name="password" onChange={handleChange}
                                     iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} /></Col>
-                                <Col span={9}></Col>
+                                <Col lg={9} sm={2} xs={0}></Col>
                             </Row>
                             <Row style={{ marginTop: '1vh' }}>
-                                <Col span={11}></Col>
-                                <Col span={2}>
+                                <Col lg={11} sm={10} xs={4}></Col>
+                                <Col lg={2} sm={4} xs={16}>
                                     {loginTypeList.map(e => showLogin(e, values, handleSubmit))}
                                 </Col>
-                                <Col span={11}></Col>
+                                <Col lg={11} sm={10} xs={4}></Col>
                             </Row>
                         </>
                     )}
