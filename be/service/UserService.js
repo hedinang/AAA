@@ -61,7 +61,7 @@ async function createUser(data) {
 async function updateUser(data) {
     let apiResponse = {}
     try {
-        let filter = { id: id };
+        let filter = { id: data.id };
         let result = await mongodb.User.findOneAndUpdate(filter, data, { new: true });
         apiResponse.status = 'OK'
         apiResponse.data = result
