@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Input, Row } from "antd"
+import { Button, Col, Divider, Input, Row, Space } from "antd"
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { login } from "../api/api";
 import { Content } from "antd/es/layout/layout";
@@ -74,26 +74,37 @@ export const Login = () => {
                 >
                     {({ resetForm, values, errors, touched, handleChange, handleSubmit }) => (
                         <>
-                            <Row style={{ marginTop: '15vh' }}>
-                                <Col lg={9} sm={2} xs={0}></Col>
-                                <Col lg={2} sm={6} xs={10}>Username</Col>
-                                <Col lg={4} sm={14} xs={14}><Input name="username" onChange={handleChange} /></Col>
-                                <Col lg={9} sm={2} xs={0}></Col>
-                            </Row>
-                            <Row style={{ marginTop: '1vh' }}>
-                                <Col lg={9} sm={2} xs={0}></Col>
-                                <Col lg={2} sm={6} xs={10}>Password</Col>
-                                <Col lg={4} sm={14} xs={14}><Input.Password name="password" onChange={handleChange}
-                                    iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} /></Col>
-                                <Col lg={9} sm={2} xs={0}></Col>
-                            </Row>
-                            <Row style={{ marginTop: '1vh' }}>
-                                <Col lg={11} sm={10} xs={4}></Col>
-                                <Col lg={2} sm={4} xs={16}>
-                                    {loginTypeList.map(e => showLogin(e, values, handleSubmit))}
+                            <Row>
+                                <Col lg={9} sm={5} xs={2}></Col>
+                                <Col lg={6} sm={14} xs={20} className='form-login-a'>
+                                    <div
+                                        style={{ marginTop: '1vh', marginBottom: '1vh' }}
+                                    >
+                                        <Row >
+                                            <Col lg={2} sm={1} xs={1}></Col>
+                                            <Col lg={8} sm={8} xs={8} className='input-name'>Username</Col>
+                                            <Col lg={12} sm={14} xs={14}><Input name="username" onChange={handleChange} /></Col>
+                                            <Col lg={2} sm={1} xs={1}></Col>
+                                        </Row>
+                                        <Row style={{ marginTop: '1vh' }}>
+                                            <Col lg={2} sm={1} xs={1}></Col>
+                                            <Col lg={8} sm={8} xs={8} className='input-name'>Password</Col>
+                                            <Col lg={12} sm={14} xs={14}><Input.Password name="password" onChange={handleChange}
+                                                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} /></Col>
+                                            <Col lg={2} sm={1} xs={1}></Col>
+                                        </Row>
+                                        <Row style={{ marginTop: '1vh' }}>
+                                            <Col span={6}></Col>
+                                            <Col span={12}>
+                                                {loginTypeList.map(e => showLogin(e, values, handleSubmit))}
+                                            </Col>
+                                            <Col span={6}></Col>
+                                        </Row>
+                                    </div>
                                 </Col>
-                                <Col lg={11} sm={10} xs={4}></Col>
+                                <Col lg={9} sm={5} xs={2}></Col>
                             </Row>
+
                         </>
                     )}
                 </Formik>
