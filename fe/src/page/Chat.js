@@ -13,17 +13,19 @@ export const Chat = () => {
     let [content, setContent] = useState([])
     let [groupList, setGroupList] = useState([{
         id: '12345',
-        name: 'hoi phu huynh',
+        name: 'HN',
         lastComment: {
             userName: 'daniel',
-            message: 'aaaaaaa'
+            message: 'aaaaaaacccccccccccc',
+            time: 'Mon'
         }
     }, {
         id: '12345',
-        name: 'hoi phu huynh',
+        name: 'QA',
         lastComment: {
             userName: 'daniel',
-            message: 'aaaaaaa'
+            message: 'aaaaaaaccccccccccccc',
+            time: '19/01/23'
         }
     }])
     let [show, setShow] = useState(false)
@@ -40,20 +42,29 @@ export const Chat = () => {
         borderColor: 'black',
         marginTop: '20px'
     }
-    const groupListStyle = {
-        color: 'black',
-        borderColor: 'blue',
-        borderStyle: 'solid',
-        height: '600px'
-    }
     let sendMessage = (values) => {
         console.log(values.draft)
     }
     const chatGroup = (group) => {
-        return <Row style={{ marginTop: '10px' }}>
-            <Col span={4} style={{ color: 'red' }}>{group.name}</Col>
-            <Col span={4} style={{ color: 'blue' }}>{group.lastComment.userName}:</Col>
-            <Col span={16}>{group.lastComment.message}</Col>
+        return <Row className='chat-line' >
+            <Col span={2} className='col-group-name'>
+                <div className='group-name'>{group.name}</div>
+            </Col>
+            <Col span={1}></Col>
+            <Col span={20}>
+                <div className='last-name-message'>
+                    <div >
+                        {group.lastComment.userName}
+                    </div>
+                    <div className='last-message'>
+                        {group.lastComment.message}
+                    </div>
+                </div>
+                <div className='last-time'>
+                    {group.lastComment.time}
+                </div>
+            </Col>
+            <Col span={1}></Col>
         </Row>
     }
     const close = () => {
@@ -62,7 +73,7 @@ export const Chat = () => {
     const open = () => {
         setShow(true)
     }
-    const createSuccess = async() => {
+    const createSuccess = async () => {
         setShow(false)
         toast("Success");
         let rawData = await allChatGroup()
@@ -73,17 +84,18 @@ export const Chat = () => {
     return (
         <>
             <Content >
-                <Row style={{ marginTop: '2vh' }}>
-                    <Col lg={8} >
-                        <div>Group List</div>
-                        <div style={groupListStyle} >
+                <Row>
+                    <Col lg={7} className='group-list-area'>
+                        <Button className='btn-chat-list' onClick={open}>Create new chat</Button>
+                        <div className='group-list-title'>Chat list</div>
+                        <div  >
                             {groupList.map(e => {
                                 return chatGroup(e)
                             })}
                         </div>
                     </Col>
                     <Col lg={1}></Col>
-                    <Col lg={15}>
+                    <Col lg={16}>
                         <Formik
                             enableReinitialize
                             initialValues={initialValues}

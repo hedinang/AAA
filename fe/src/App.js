@@ -6,6 +6,7 @@ import { Landing } from './page/Landing';
 import './scss/style.scss'
 import './scss/navbar.scss'
 import './scss/login.scss'
+import './scss/chat.scss'
 import { Chat } from './page/Chat';
 import { Login } from './page/Login';
 import { PrivateRoute } from './component/ProtectedRoute';

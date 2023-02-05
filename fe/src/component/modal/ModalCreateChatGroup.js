@@ -61,7 +61,7 @@ export const ModalCreateChatGroup = ({ show, close, createSuccess }) => {
             {({ values, errors, touched, handleSubmit, resetForm, handleChange }) => (
                 <Modal
                     open={show}
-                    title="Create user"
+                    title="Create chat"
                     keyboard={false}
                     closable={false}
                     footer={[
