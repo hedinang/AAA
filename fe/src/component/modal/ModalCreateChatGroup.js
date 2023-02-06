@@ -47,16 +47,6 @@ export const ModalCreateChatGroup = ({ show, close, createSuccess }) => {
         <Formik
             enableReinitialize
             initialValues={initialValues}
-            validationSchema={Yup.object().shape({
-                email: Yup.string()
-                    .email()
-                    .required("Email not blank"),
-                password: Yup.string()
-                    .required("Password not blank"),
-                firstName: Yup.string()
-                    .required("First name not blank")
-            })
-            }
         >
             {({ values, errors, touched, handleSubmit, resetForm, handleChange }) => (
                 <Modal
@@ -90,7 +80,7 @@ export const ModalCreateChatGroup = ({ show, close, createSuccess }) => {
                         <Row>
                             <Col span={7} ><Text strong> Group Name:</Text></Col>
                             <Col span={17} >
-                                <Input name='groupName' onChange={handleChange} />
+                                <Input value={values.groupName} name='groupName' onChange={handleChange} />
                             </Col>
                         </Row>
                         <Row>

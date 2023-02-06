@@ -34,4 +34,10 @@ async function allChatGroup() {
 async function createChatGroup(body) {
     return await axios.post('http://' + rootUrl + ':8000/chat/create', body, { timeout: 8000 });
 }
-export { initialGroupUserList, login, allUser, deleteUser, editUser, createUser, allChatGroup, createChatGroup }
+async function detailChat(body) {
+    return await axios.post('http://' + rootUrl + ':8000/chat/detail', body, { timeout: 8000 });
+}
+export {
+    initialGroupUserList, login, allUser, deleteUser,
+    editUser, createUser, allChatGroup, createChatGroup, detailChat
+}

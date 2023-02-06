@@ -27,9 +27,15 @@
 }
 .group-list-area {
     margin-left: 10px;
-    border-right-style: solid;
-    height: 1200px;
-    border-right-color: #69839b;
+}
+.content-area-col {
+    border-left-style: solid;
+    border-left-color: #1677ff;
+}
+.content-area {
+    margin-left: 10px;
+    border-style: none !important;
+    color: black !important;
 }
 
 .group-list-title {
@@ -51,4 +57,16 @@
 }
 .chat-line {
     margin-top: 10px;
+}
+.text-area-box {
+    position: sticky;
+    bottom: 0px;
+    color: black;
+    border-top-color: #1677ff;
+    border-top-style: solid;
+    border-top-width: 2px;
+}
+
+.all-row {
+    height: 100%;
 }

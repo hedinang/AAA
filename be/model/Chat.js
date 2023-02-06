@@ -13,6 +13,9 @@ var chat = new Schema({
         default: uuid.v4()
 
     },
+    name: {
+        type: String
+    },
     userList: {
         type: Array,
         required: true
@@ -21,8 +24,8 @@ var chat = new Schema({
         type: Array
     }
     // content contains {
-        //userId
-        //message
+    //userId
+    //message
     //}
 });
 module.exports = mongoose.model(models, chat);
