@@ -6,11 +6,12 @@ import { Field, Formik } from "formik";
 import { useState } from "react";
 import 'react-toastify/dist/ReactToastify.css';
 import { ModalCreateChatGroup } from "../component/modal/ModalCreateChatGroup";
-import { allChatGroup, detailChat } from "../api/api";
+import { allChatGroup, detailChat, sendMessage } from "../api/api";
 import { toast } from 'react-toastify';
 
 export const Chat = () => {
-    let [content, setContent] = useState('')
+    let [contents, setContents] = useState([])
+    let [groupId, setGroupId] = useState('')
     let [groupList, setGroupList] = useState([{
         id: '12345',
         name: 'HN',
@@ -54,30 +55,16 @@ export const Chat = () => {
     useEffect(() => {
         fetchChatList()
     }, [])
-
-
     // name,id, lastcomment
     let initialValues = {
         draft: ''
     }
-    const textAreaStyle = {
-        color: 'red',
-        borderColor: 'black'
-    }
-    const inputStyle = {
-        color: 'black',
-        borderColor: 'black',
-        marginTop: '20px'
-    }
-    let sendMessage = (values) => {
-        console.log(values.draft)
-    }
     let chooseChat = async (group) => {
-        console.log('sss')
         const detail = await detailChat({
             id: group.id
         })
-        setContent('detail.content')
+        setContents(detail.data.content)
+        setGroupId(group.id)
     }
     const chatGroup = (group) => {
         return <Row className='chat-line' onClick={(e) => chooseChat(group)}>
@@ -114,6 +101,25 @@ export const Chat = () => {
         if (rawData)
             setGroupList(rawData.data)
     }
+    const pressEnter = async (e, draft) => {
+        if (e.keyCode === 13) {
+            console.log('aaa')
+            let result = await sendMessage({
+                id: groupId,
+                userId: window.localStorage.getItem('userId'),
+                message: draft
+            })
+            if (result.data.status === 'OK') {
+                console.log('aaa')
+            }
+        }
+    }
+    const lineMessage = (content) => {
+        return <Row>
+            <Col span={20}>{content.userName}: {content.message}</Col>
+            <Col span={4}>{content.time}</Col>
+        </Row>
+    }
 
     return (
         <>
@@ -135,12 +141,13 @@ export const Chat = () => {
                         >
                             {({ values, handleChange }) => (
                                 <>
-                                    <Row >
-                                        <TextArea className='content-area' value={content} disabled={true} rows={32} scro />
-                                    </Row>
-                                    <Row className='text-area-box'>
-                                        <TextArea className='content-area' name='draft' onChange={handleChange} rows={5} />
-                                    </Row>
+                                    <div style={{ height: '700px' }}>
+                                        {/* <TextArea className='content-area' value={content} disabled={true} rows={32} scro /> */}
+                                        {contents.map(e => lineMessage(e))}
+                                    </div>
+                                    <div className='text-area-box'>
+                                        <TextArea className='content-area' name='draft' onChange={handleChange} onKeyDown={e => pressEnter(e, values.draft)} rows={5} />
+                                    </div>
                                 </>
                             )}
                         </Formik>

@@ -34,6 +34,7 @@ export const ModalCreateChatGroup = ({ show, close, createSuccess }) => {
     }, [])
     const save = async (e, resetForm) => {
         console.log('aaa')
+        e.hostId = window.localStorage.getItem('userId')
         let result = await createChatGroup(e)
         if (result.status === 'OK') {
             createSuccess()
@@ -48,7 +49,7 @@ export const ModalCreateChatGroup = ({ show, close, createSuccess }) => {
             enableReinitialize
             initialValues={initialValues}
         >
-            {({ values, errors, touched, handleSubmit, resetForm, handleChange }) => (
+            {({ values, errors, touched, handleSubmit, resetForm, handleChange, setFieldValue }) => (
                 <Modal
                     open={show}
                     title="Create chat"
@@ -86,15 +87,18 @@ export const ModalCreateChatGroup = ({ show, close, createSuccess }) => {
                         <Row>
                             <Col span={7} ><Text strong> Member List:</Text></Col>
                             <Col span={17} >
-                                <Select
-                                    mode="multiple"
-                                    placeholder="Inserted are removed"
-                                    onChange={(value, entire) => {
-                                        values.memberList.push(entire[0])
-                                    }}
-                                    style={{ width: '100%' }}
-                                    options={userList}
-                                />
+                                <Field name={'memberList'}>
+                                    {({ field }) => (
+                                        <Select
+                                            {...field}
+                                            mode="multiple"
+                                            placeholder="Inserted are removed"
+                                            onChange={(value, entire) => setFieldValue('memberList', value)}
+                                            style={{ width: '100%' }}
+                                            options={userList}
+                                        />
+                                    )}
+                                </Field>
                             </Col>
                         </Row>
                     </Form>

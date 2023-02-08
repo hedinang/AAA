@@ -17,6 +17,10 @@ router.post('/detail', async function (req, res) {
     let result = await chatService.getDetailMessage(req.body)
     res.send(result)
 })
+router.put('/message', async function (req, res) {
+    let result = await chatService.sendMessage(req.body)
+    res.send(result)
+})
 // router.put('/update', async function (req, res) {
 //     let result = await chatService.updateUser(req.body)
 //     res.send(result)

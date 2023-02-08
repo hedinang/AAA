@@ -28,9 +28,9 @@ async function allChatGroup() {
 // async function deleteUser(userId) {
 //     return await axios.delete('http://' + rootUrl + ':8000/user/delete/' + userId, { timeout: 8000 });
 // }
-// async function editUser(body) {
-//     return await axios.put('http://' + rootUrl + ':8000/user/update', body, { timeout: 8000 });
-// }
+async function sendMessage(body) {
+    return await axios.put('http://' + rootUrl + ':8000/chat/message', body, { timeout: 8000 });
+}
 async function createChatGroup(body) {
     return await axios.post('http://' + rootUrl + ':8000/chat/create', body, { timeout: 8000 });
 }
@@ -39,5 +39,5 @@ async function detailChat(body) {
 }
 export {
     initialGroupUserList, login, allUser, deleteUser,
-    editUser, createUser, allChatGroup, createChatGroup, detailChat
+    editUser, createUser, allChatGroup, createChatGroup, detailChat, sendMessage
 }

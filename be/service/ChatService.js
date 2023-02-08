@@ -10,6 +10,7 @@ async function getAll() {
 }
 async function createChat(data) {
     let apiResponse = {}
+    data.memberList.push(data.hostId)
     let result = await mongodb.Chat.create({
         id: uuid.v4(),
         userList: data.memberList,
@@ -23,16 +24,39 @@ async function createChat(data) {
 async function sendMessage(data) {
     let apiResponse = {}
     if (data.id) {
-        let chat = await mongodb.Chat.findById(data.id).lean()
-        chat.content.push(data.message)
+        let chats = await mongodb.Chat.find({ id: data.id }).lean()
+        if (chats.length) {
+            let chat = chats[0]
+            chat.content.push({
+                userId: data.userId,
+                message: data.message,
+                time: new Date().toISOString()
+            })
+            try {
+                let result = await mongodb.Chat.findOneAndUpdate({ id: data.id }, chat, { new: true });
+                apiResponse.data = result;
+                apiResponse.status = 'OK'
+            } catch (error) {
+                apiResponse.message = 'Update data wrong'
+                apiResponse.status = 'Bad Request'
+            }
+        }
+    } else {
+        apiResponse.message = 'Update data wrong'
+        apiResponse.status = 'Bad Request'
     }
     return apiResponse
 }
 async function getDetailMessage(data) {
     let apiResponse = {}
-    let chat = await mongodb.Chat.find({ id: data.id }).lean()
-    apiResponse.data = chat
-    apiResponse.status = 'OK'
+    let chats = await mongodb.Chat.find({ id: data.id }).lean()
+    if (chats.length) {
+        apiResponse.data = chats[0]
+        apiResponse.status = 'OK'
+    } else {
+        apiResponse.message = 'Update data wrong'
+        apiResponse.status = 'Bad Request'
+    }
     return apiResponse
 }
 module.exports = {
