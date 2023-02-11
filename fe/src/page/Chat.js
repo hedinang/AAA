@@ -8,48 +8,18 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ModalCreateChatGroup } from "../component/modal/ModalCreateChatGroup";
 import { allChatGroup, detailChat, sendMessage } from "../api/api";
 import { toast } from 'react-toastify';
+const moment = require('moment');
 
 export const Chat = () => {
     let [contents, setContents] = useState([])
     let [groupId, setGroupId] = useState('')
-    let [groupList, setGroupList] = useState([{
-        id: '12345',
-        name: 'HN',
-        lastComment: {
-            userName: 'daniel',
-            message: 'aaaaaaacccccccccccc',
-            time: 'Mon'
-        }
-    }, {
-        id: '12345',
-        name: 'QA',
-        lastComment: {
-            userName: 'daniel',
-            message: 'aaaaaaaccccccccccccc',
-            time: '19/01/23'
-        }
-    },
-    {
-        id: '12345',
-        name: 'HN',
-        lastComment: {
-            userName: 'daniel',
-            message: 'aaaaaaacccccccccccc',
-            time: 'Mon'
-        }
-    }, {
-        id: '12345',
-        name: 'QA',
-        lastComment: {
-            userName: 'daniel',
-            message: 'aaaaaaaccccccccccccc',
-            time: '19/01/23'
-        }
-    }])
+    let [groupList, setGroupList] = useState([])
     let [show, setShow] = useState(false)
     const fetchChatList = async () => {
-        let rawData = await allChatGroup()
-        if (rawData)
+        let rawData = await allChatGroup({
+            id: window.localStorage.getItem('userId')
+        })
+        if (rawData.data)
             setGroupList(rawData.data)
     }
     useEffect(() => {
@@ -81,9 +51,14 @@ export const Chat = () => {
                         {group?.lastComment?.message}
                     </div>
                 </div>
-                <div className='last-time'>
-                    {group?.lastComment?.time}
-                </div>
+                {group?.lastComment?.time ?
+                    <div className='last-time'>
+                        {moment(group?.lastComment?.time).format('YYYY-MM-DD HH:mm:ss')}
+                    </div> : <></>
+                }
+                {/* <div className='last-time'>
+                    {moment(group?.lastComment?.time).format('YYYY-MM-DD HH:mm:ss')}
+                </div> */}
             </Col>
             <Col span={1}></Col>
         </Row>
@@ -97,11 +72,9 @@ export const Chat = () => {
     const createSuccess = async () => {
         setShow(false)
         toast("Success");
-        let rawData = await allChatGroup()
-        if (rawData)
-            setGroupList(rawData.data)
+        fetchChatList()
     }
-    const pressEnter = async (e, draft) => {
+    const pressEnter = async (e, draft, setValues) => {
         if (e.keyCode === 13) {
             console.log('aaa')
             let result = await sendMessage({
@@ -109,16 +82,49 @@ export const Chat = () => {
                 userId: window.localStorage.getItem('userId'),
                 message: draft
             })
-            if (result.data.status === 'OK') {
+            if (result.status === 'OK') {
                 console.log('aaa')
+                const detail = await detailChat({
+                    id: groupId
+                })
+                setValues({ ...initialValues })
+                setContents(detail.data.content)
+                fetchChatList()
             }
         }
     }
     const lineMessage = (content) => {
-        return <Row>
-            <Col span={20}>{content.userName}: {content.message}</Col>
-            <Col span={4}>{content.time}</Col>
-        </Row>
+        if (JSON.stringify(content) === '{}') {
+            return <></>
+        }
+        if (content.userId === window.localStorage.getItem('userId')) {
+            return <div>
+                <Row >
+                    <Col span={12}></Col>
+                    <Col span={12}>
+                        <Row style={{ float: 'right' }}>
+                            <div className='message-user'>{content.userName} </div>
+                            <div className='message-content'>{content.message}</div>
+                        </Row>
+                    </Col>
+                </Row>
+                <Row ><div style={{ marginRight: 'auto', marginLeft: 'auto' }}>{moment(content.time).format('YYYY-MM-DD HH:mm:ss')}</div></Row>
+            </div>
+        } else {
+            return <div>
+                <Row >
+                    <Col span={12}>
+                        <Row>
+                            <div className='message-user'>{content.userName} </div>
+                            <div className='message-content'>{content.message}</div>
+                        </Row>
+                    </Col>
+                    <Col span={12}></Col>
+
+                </Row>
+                <Row ><div style={{ marginRight: 'auto', marginLeft: 'auto' }}>{moment(content.time).format('YYYY-MM-DD HH:mm:ss')}</div></Row>
+            </div>
+        }
     }
 
     return (
@@ -139,14 +145,15 @@ export const Chat = () => {
                             enableReinitialize
                             initialValues={initialValues}
                         >
-                            {({ values, handleChange }) => (
+                            {({ values, handleChange, setValues }) => (
                                 <>
-                                    <div style={{ height: '700px' }}>
-                                        {/* <TextArea className='content-area' value={content} disabled={true} rows={32} scro /> */}
+                                    <div style={{ height: '700px', overflow: 'scroll' }}>
                                         {contents.map(e => lineMessage(e))}
                                     </div>
                                     <div className='text-area-box'>
-                                        <TextArea className='content-area' name='draft' onChange={handleChange} onKeyDown={e => pressEnter(e, values.draft)} rows={5} />
+                                        <TextArea value={values.draft}
+                                            className='content-area' name='draft' onChange={handleChange}
+                                            onKeyDown={e => pressEnter(e, values.draft, setValues)} rows={5} />
                                     </div>
                                 </>
                             )}

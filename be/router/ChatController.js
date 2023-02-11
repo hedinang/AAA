@@ -5,8 +5,8 @@ const router = express.Router();
 //     let result = await chatService.get(req.params.userId);
 //     res.send(result)
 // })
-router.get('/all', async function (req, res) {
-    let result = await chatService.getAll()
+router.post('/all', async function (req, res) {
+    let result = await chatService.getAll(req.body)
     res.send(result)
 })
 router.post('/create', async function (req, res) {

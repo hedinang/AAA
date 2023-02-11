@@ -22,7 +22,16 @@ var chat = new Schema({
     },
     content: {
         type: Array
-    }
+    },
+    createdAt: {
+        type: Date,
+        required: false
+    },
+    updatedAt: {
+        type: Date,
+        required: false,
+        default: new Date()
+    },
     // content contains {
     //userId
     //message

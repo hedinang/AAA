@@ -1,8 +1,52 @@
 const mongodb = require('../model/index')
 var uuid = require('uuid');
-async function getAll() {
+async function getAll(data) {
     let apiResponse = {}
-    let result = await mongodb.Chat.find().lean()
+    let result = await mongodb.Chat.aggregate([
+        {
+            $match:
+            {
+                userList: {
+                    $elemMatch: {
+                        $eq: data.id
+                    }
+                }
+            }
+        },
+        { $unwind: { path: "$content", preserveNullAndEmptyArrays: true } },
+        {
+            $lookup:
+                { from: "users", localField: "content.userId", foreignField: "id", as: "user" }
+        },
+        { $unwind: { path: "$user", preserveNullAndEmptyArrays: true } },
+        {
+            $project: {
+                "id": 1,
+                "name": 1,
+                "content": 1,
+                "user": 1,
+                'createdAt': 1
+            }
+        },
+        {
+            $addFields: {
+                "content.userName": "$user.name"
+            }
+        },
+        {
+            $group: {
+                _id: '$id',
+                id: { $first: '$id' },
+                name: { $first: '$name' },
+                createdAt: { $first: '$createdAt' },
+                lastComment: {
+                    $last: '$content'
+                }
+            }
+        },
+        { $sort: { createdAt: 1 } },
+
+    ])
 
     apiResponse.data = result
     apiResponse.status = 'OK'
@@ -14,7 +58,9 @@ async function createChat(data) {
     let result = await mongodb.Chat.create({
         id: uuid.v4(),
         userList: data.memberList,
-        name: data.groupName
+        name: data.groupName,
+        createdAt: new Date(),
+        updatedAt: new Date()
     })
     // apiResponse.data = result
     apiResponse.status = 'OK'
@@ -49,7 +95,38 @@ async function sendMessage(data) {
 }
 async function getDetailMessage(data) {
     let apiResponse = {}
-    let chats = await mongodb.Chat.find({ id: data.id }).lean()
+    let chats = await mongodb.Chat.aggregate([
+        { $match: { id: data.id } },
+        { $unwind: { path: "$content", preserveNullAndEmptyArrays: true } },
+        {
+            $lookup:
+                { from: "users", localField: "content.userId", foreignField: "id", as: "user" }
+        },
+        { $unwind: { path: "$user", preserveNullAndEmptyArrays: true } },
+        {
+            $project: {
+                "id": 1,
+                "name": 1,
+                "content": 1,
+                "user": 1
+            }
+        },
+        {
+            $addFields: {
+                "content.userName": "$user.name"
+            }
+        },
+        {
+            $group: {
+                _id: '$id',
+                id: { $first: '$id' },
+                name: { $first: '$name' },
+                content: {
+                    $push: '$content'
+                }
+            }
+        }
+    ])
     if (chats.length) {
         apiResponse.data = chats[0]
         apiResponse.status = 'OK'
