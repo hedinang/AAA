@@ -27,6 +27,7 @@ const devConfig = {
       }),
       new webpack.DefinePlugin({
          "process.env.ROOT_URL": JSON.stringify("localhost"),
+         'process.env.PUBLIC_KEY': JSON.stringify('BLxQxFrE6dlnKPjD8276HW4KB8C2PsEl93iF5aDnP6Uikdw5pQVTxUNn5LLEr_mtwpVlSHn7LTa_vzcJSot0CXs'),
       }),
    ]
 };

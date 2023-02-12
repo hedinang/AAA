@@ -1,20 +1,22 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
+import { getMessaging } from "firebase/messaging";
 const firebaseConfig = {
-    apiKey: "AIzaSyDbuiLkt2Y992Hp-wdA39nB_-SgtcU6e0o",
-    authDomain: "mechanics-d2b54.firebaseapp.com",
-    projectId: "mechanics-d2b54",
-    storageBucket: "mechanics-d2b54.appspot.com",
-    messagingSenderId: "395755035508",
-    appId: "851613512730637",
-    // appSecret: '9fd27eb285daf1295977673486326b44',
-    measurementId: "G-V70PVMV6K2",
+    apiKey: "AIzaSyBLwUET9Ps-ZLH-W0Fky1sXCoX87L69ZTc",
+    authDomain: "testabc-a43d1.firebaseapp.com",
+    projectId: "testabc-a43d1",
+    storageBucket: "testabc-a43d1.appspot.com",
+    messagingSenderId: "827301614113",
+    appId: "1:827301614113:web:30894371cb045db8150960",
+    measurementId: "G-LJCMECPW7B"
 };
 
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
+const messaging = getMessaging(app);
+
 const google = new GoogleAuthProvider()
 const facebook = new FacebookAuthProvider();
-export { auth, google, facebook };
+export { auth, google, facebook, messaging };

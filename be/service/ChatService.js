@@ -1,4 +1,6 @@
 const mongodb = require('../model/index')
+const firebase = require('../api/firebase')
+const chatService = require('../service/ChatService')
 var uuid = require('uuid');
 async function getAll(data) {
     let apiResponse = {}
@@ -136,6 +138,13 @@ async function getDetailMessage(data) {
     }
     return apiResponse
 }
+async function getFirebase() {
+    let apiResponse = {}
+    const tokens = await firebase.getAccessToken()
+    apiResponse.data = tokens
+    apiResponse.status = 'OK'
+    return apiResponse
+}
 module.exports = {
-    getAll, createChat, sendMessage, getDetailMessage
+    getAll, createChat, sendMessage, getDetailMessage, getFirebase
 }

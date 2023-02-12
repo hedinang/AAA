@@ -5,11 +5,14 @@ import { useEffect, useState } from "react";
 import { ModalEditUser } from "../component/modal/ModalEditUser";
 import { ModalDeleteUser } from "../component/modal/ModalDeleteUser";
 import { allUser } from "../api/api";
-import { EditOutlined, DeleteOutlined, UserAddOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, UserAddOutlined, CopyOutlined, FundOutlined } from '@ant-design/icons';
 import "../scss/style.scss";
 import { ModalCreateUser } from "../component/modal/ModalCreateUser";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { messaging } from '../config/config';
+import { getToken, onMessage } from "firebase/messaging";
+import { onBackgroundMessage } from "firebase/messaging/sw";
 
 const Landing = () => {
     const [showEdit, setShowEdit] = useState(false);
@@ -70,6 +73,36 @@ const Landing = () => {
         let rawData = await allUser()
         if (rawData)
             setData(rawData.data)
+    }
+    const generateToken = async () => {
+        // Add the public key generated from the console here.
+        try {
+            const token = await getToken(messaging, { vapidKey: process.env.PUBLIC_KEY });
+            console.log(token)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+    const receiveMessage = async () => {
+        // Add the public key generated from the console here.
+        // onMessage(messaging, (payload) => {
+        //     console.log('Message received. ', payload);
+        //     // ...
+        // });
+        onBackgroundMessage(messaging, (payload) => {
+            console.log('[firebase-messaging-sw.js] Received background message ', payload);
+            // Customize notification here
+            const notificationTitle = 'Background Message Title';
+            const notificationOptions = {
+                body: 'Background Message body.',
+                icon: '/firebase-logo.png'
+            };
+
+            ServiceWorkerRegistration.showNotification(notificationTitle,
+                notificationOptions);
+        });
+
     }
 
     const columns = [
@@ -138,9 +171,9 @@ const Landing = () => {
                     </Col>
                     <Col lg={20}>
                         <UserAddOutlined style={{ color: 'blue', cursor: 'pointer', fontSize: '150%' }} onClick={openCreate} />
-                        <Table dataSource={data} columns={columns} scroll={{ x: true }}
-                            
-                        />
+                        <CopyOutlined style={{ color: 'blue', cursor: 'pointer', fontSize: '150%', marginLeft: '100px' }} onClick={generateToken} />
+                        <FundOutlined style={{ color: 'blue', cursor: 'pointer', fontSize: '150%', marginLeft: '100px' }} onClick={receiveMessage} />
+                        <Table dataSource={data} columns={columns} scroll={{ x: true }} />
                     </Col>
                     <Col lg={2}></Col>
                 </Row>
