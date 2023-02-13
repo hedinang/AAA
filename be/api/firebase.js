@@ -9,9 +9,8 @@ async function sendMessage(body) {
     return await axios.post('https://fcm.googleapis.com/v1/projects/myproject-b5ae1/messages:send', body, { timeout: 8000 });
 }
 
-async function getAccessToken() {
+async function getAccessToken(token) {
     // Add the public key generated from the console here.
-    const token = 'esED3tO1wqU2E9KtOniDNW:APA91bGkoByz4NnDF-8ueLEWPh-44pLVC0TJanI4b5110iUTx5zerbkLRqwaT9W8-WrnE3ziij9noHH3gG6mTTEXkCzcO3fSnVnNgJendMeAkyTMWJi2JLtBw-hlmPbtrwH87wVkVJ7f'
     const data = {
         message: {
             token: token,
@@ -25,7 +24,11 @@ async function getAccessToken() {
             },
         },
     };
-    const r = await admin.messaging().send(data.message);
+    try {
+        const r = await admin.messaging().send(data.message);
+    } catch (error) {
+        console.log(error)
+    }
     return 'ss'
 }
 

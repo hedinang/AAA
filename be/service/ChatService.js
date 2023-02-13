@@ -138,11 +138,23 @@ async function getDetailMessage(data) {
     }
     return apiResponse
 }
-async function getFirebase() {
+async function getFirebase(data) {
     let apiResponse = {}
-    const tokens = await firebase.getAccessToken()
-    apiResponse.data = tokens
-    apiResponse.status = 'OK'
+    let users = await mongodb.User.find({ id: data.id }).lean()
+    if (users.length) {
+        let user = users[0]
+        if (user.firebaseToken) {
+            const tokens = await firebase.getAccessToken(user.firebaseToken)
+            apiResponse.data = tokens
+            apiResponse.status = 'OK'
+        } else {
+            apiResponse.message = 'This account has not registered firebase token'
+            apiResponse.status = 'Bad Request'
+        }
+    } else {
+        apiResponse.message = 'Update data wrong'
+        apiResponse.status = 'Bad Request'
+    }
     return apiResponse
 }
 module.exports = {

@@ -29,4 +29,8 @@ router.delete('/delete/:userId', async function (req, res) {
     let result = await userService.deleteUser(req.params.userId)
     res.send(result)
 })
+router.put('/firebase/update', async function (req, res) {
+    let result = await userService.updateFirebaseToken(req.body)
+    res.send(result)
+})
 module.exports = router

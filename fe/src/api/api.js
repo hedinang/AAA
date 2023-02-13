@@ -23,7 +23,7 @@ async function createUser(body) {
 
 
 async function allChatGroup(body) {
-    return await axios.post('http://' + rootUrl + ':8000/chat/all',body, { timeout: 8000 });
+    return await axios.post('http://' + rootUrl + ':8000/chat/all', body, { timeout: 8000 });
 }
 // async function deleteUser(userId) {
 //     return await axios.delete('http://' + rootUrl + ':8000/user/delete/' + userId, { timeout: 8000 });
@@ -37,7 +37,10 @@ async function createChatGroup(body) {
 async function detailChat(body) {
     return await axios.post('http://' + rootUrl + ':8000/chat/detail', body, { timeout: 8000 });
 }
+async function updateFirebaseToken(body) {
+    return await axios.put('http://' + rootUrl + ':8000/user/firebase/update', body, { timeout: 8000 });
+}
 export {
-    initialGroupUserList, login, allUser, deleteUser,
+    initialGroupUserList, login, allUser, deleteUser, updateFirebaseToken,
     editUser, createUser, allChatGroup, createChatGroup, detailChat, sendMessage
 }

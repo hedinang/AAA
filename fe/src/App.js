@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Layout } from 'antd';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Sidebar from './component/Sidebar';
@@ -13,9 +13,28 @@ import { PrivateRoute } from './component/ProtectedRoute';
 import Navbar from './component/nav/NavBar';
 import { useState } from 'react';
 import { CoverLogin } from './component/CoverLogin';
+import { messaging } from './config/config';
+import { getToken } from "firebase/messaging";
+import { updateFirebaseToken } from './api/api';
+
 
 function App() {
-  const [user, setUser] = useState(window.localStorage.getItem('user'))
+  const [user, setUser] = useState(localStorage.getItem('user'))
+  const checkFirebaseToken = async () => {
+    try {
+      const token = await getToken(messaging, { vapidKey: process.env.PUBLIC_KEY });
+      await updateFirebaseToken({
+        id: localStorage.getItem('userId'),
+        firebaseToken: token
+      })
+      console.log(token)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(() => {
+    checkFirebaseToken()
+  }, [])
   return (
     <>
       <Layout>

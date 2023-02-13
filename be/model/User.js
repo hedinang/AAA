@@ -28,6 +28,9 @@ var user = new Schema({
     },
     publicKey: {
         type: String
+    },
+    firebaseToken: {
+        type: String
     }
 });
 module.exports = mongoose.model(models, user);

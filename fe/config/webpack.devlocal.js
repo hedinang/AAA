@@ -16,6 +16,7 @@ const devConfig = {
       port: 3000,
       historyApiFallback: true,
       hot: true,
+      https: true,
    },
    plugins: [
       new MFLiveReloadPlugin({

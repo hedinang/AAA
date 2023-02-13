@@ -30,7 +30,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "webpack serve --config config/webpack.devlocal.js",
+    "local": "webpack serve --config config/webpack.devlocal.js",
+    "dev": "webpack serve --config config/webpack.devside.js",
     "staging": "webpack serve --config config/webpack.staging.js"
   },
   "eslintConfig": {

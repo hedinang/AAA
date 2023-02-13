@@ -17,8 +17,8 @@ router.put('/message', async function (req, res) {
     let result = await chatService.sendMessage(req.body)
     res.send(result)
 })
-router.get('/firebase', async function (req, res) {
-    let result = await chatService.getFirebase()
+router.post('/firebase', async function (req, res) {
+    let result = await chatService.getFirebase(req.body)
     res.send(result)
 })
 module.exports = router

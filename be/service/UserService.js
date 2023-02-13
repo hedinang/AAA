@@ -71,7 +71,20 @@ async function updateUser(data) {
     }
     return apiResponse
 }
+async function updateFirebaseToken(data) {
+    let apiResponse = {}
+    try {
+        let filter = { id: data.id };
+        let result = await mongodb.User.findOneAndUpdate(filter, data);
+        apiResponse.status = 'OK'
+        apiResponse.data = result
+    } catch (error) {
+        apiResponse.message = 'Update data wrong'
+        apiResponse.status = 'Bad Request'
+    }
+    return apiResponse
+}
 
 module.exports = {
-    deleteUser, getAll, createUser, updateUser, initial, login
+    deleteUser, getAll, createUser, updateUser, initial, login, updateFirebaseToken
 }
