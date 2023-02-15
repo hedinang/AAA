@@ -40,9 +40,8 @@ function App() {
       <Layout>
         <Navbar />
         <Layout>
-          {user ? <Sidebar></Sidebar> : <></>}
+          <Sidebar></Sidebar>
           <Routes>
-
             <Route path='/login' element={
               <CoverLogin>
                 <Login />
@@ -58,7 +57,6 @@ function App() {
           </Routes>
         </Layout>
       </Layout>
-
     </>
 
   )
