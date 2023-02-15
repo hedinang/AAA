@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Drawer } from "antd";
+import { Button, Col, Drawer, Row } from "antd";
 import { Header } from "antd/es/layout/layout";
 import { MenuOutlined } from "@ant-design/icons";
 import { useLocation } from "react-router-dom";
 import LeftMenu from "./LeftMenu";
 import RightMenu from "./RightMenu";
+import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 
 const Navbar = () => {
     const [visible, setVisible] = useState(false);
@@ -20,13 +21,35 @@ const Navbar = () => {
     useEffect(() => {
         setVisible(false);
     }, [location]);
-    // Upto here
-
     return (
         <>
             {user ?
                 <Header className="nav-header">
-                    <div className="logo">
+                    <Row>
+                        <Col lg={5} span={5}>
+                            <h3>Brand Here</h3>
+                        </Col>
+                        <Col lg={15} span={0}>
+                            <LeftMenu mode={"horizontal"} />
+                        </Col>
+                        <Col lg={0} span={19}>
+                            sssss
+                        </Col>
+                        <Col lg={4} span={0}>
+                            <RightMenu mode={"horizontal"} />
+                        </Col>
+                    </Row>
+                    <div style={{ position: 'absolute', top: '80px', right: '50px', backgroundColor: 'blue', width: '150px', height: '150px', zIndex: 1 }}>
+                        <div className="right-down">
+                            <div><UserOutlined /> Profile</div>
+                            <div>
+                                <LogoutOutlined /> Logout
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* <div className="logo">
                         <h3 className="brand-font">Brand Here</h3>
                     </div>
                     <div className="navbar-menu">
@@ -54,7 +77,7 @@ const Navbar = () => {
                             <LeftMenu mode={"inline"} />
                             <RightMenu mode={"inline"} />
                         </Drawer>
-                    </div>
+                    </div> */}
                 </Header>
                 : <></>}
         </>

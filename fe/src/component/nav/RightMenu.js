@@ -8,23 +8,37 @@ const RightMenu = ({ mode }) => {
         window.location.reload();
     }
     return (
-        <Menu mode={mode}>
-            <Menu.SubMenu
-                title={
-                    <>
-                        <Avatar icon={<UserOutlined />} />
-                        <span className="username">{window.localStorage.getItem('user')}</span>
-                    </>
-                }
-            >
-                <Menu.Item key="about-us">
-                    <UserOutlined /> Profile
-                </Menu.Item>
-                <Menu.Item key="log-out" onClick={logOut}>
+        <div>
+            <div className="right-menu">
+                <div><h4 className="username">{window.localStorage.getItem('user')}</h4>
+                    <Avatar icon={<UserOutlined />} /></div>
+
+            </div>
+            {/* <div style={{ position: 'absolute', marginTop: '30px' }}>
+                <div><UserOutlined /> Profile</div>
+                <div>
                     <LogoutOutlined /> Logout
-                </Menu.Item>
-            </Menu.SubMenu>
-        </Menu>
+
+                </div>
+            </div> */}
+        </div>
+        // <Menu mode={mode} className="right-menu">
+        //     <Menu.SubMenu
+        //         title={
+        //             <>
+        //                 <Avatar icon={<UserOutlined />} />
+        //                 <span className="username">{window.localStorage.getItem('user')}</span>
+        //             </>
+        //         }
+        //     >
+        //         <Menu.Item key="about-us">
+        //             <UserOutlined /> Profile
+        //         </Menu.Item>
+        //         <Menu.Item key="log-out" onClick={logOut}>
+        //             <LogoutOutlined /> Logout
+        //         </Menu.Item>
+        //     </Menu.SubMenu>
+        // </Menu>
     );
 };
 
