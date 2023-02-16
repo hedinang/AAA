@@ -6,21 +6,23 @@ import { useLocation } from "react-router-dom";
 import LeftMenu from "./LeftMenu";
 import RightMenu from "./RightMenu";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
+import VerticalRightMenu from "./VerticalRightMenu";
 
 const Navbar = () => {
     const [visible, setVisible] = useState(false);
     const [user, setUser] = useState(window.localStorage.getItem('user'))
+    const [verticalMenu, setVerticalMenu] = useState(false)
     const showDrawer = () => {
         setVisible(!visible);
     };
-
-    // If you do not want to auto-close the mobile drawer when a path is selected
-    // Delete or comment out the code block below
-    // From here
     let { pathname: location } = useLocation();
     useEffect(() => {
         setVisible(false);
     }, [location]);
+
+    let onVerticalMenu = () => {
+        setVerticalMenu(!verticalMenu)
+    }
     return (
         <>
             {user ?
@@ -36,18 +38,10 @@ const Navbar = () => {
                             sssss
                         </Col>
                         <Col lg={4} span={0}>
-                            <RightMenu mode={"horizontal"} />
+                            <RightMenu onVerticalMenu={onVerticalMenu} />
                         </Col>
                     </Row>
-                    <div style={{ position: 'absolute', top: '80px', right: '50px', backgroundColor: 'blue', width: '150px', height: '150px', zIndex: 1 }}>
-                        <div className="right-down">
-                            <div><UserOutlined /> Profile</div>
-                            <div>
-                                <LogoutOutlined /> Logout
-
-                            </div>
-                        </div>
-                    </div>
+                    {verticalMenu ? <VerticalRightMenu /> : <></>}
 
                     {/* <div className="logo">
                         <h3 className="brand-font">Brand Here</h3>
