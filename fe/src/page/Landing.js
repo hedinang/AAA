@@ -144,7 +144,7 @@ const Landing = () => {
     return (
         <>
             <Content >
-                <Row className="responsive" style={{ marginTop: '10vh' }}>
+                <Row className="responsive" style={{ marginTop: '2vh' }}>
                     <Col lg={2}>
                     </Col>
                     <Col lg={20}>

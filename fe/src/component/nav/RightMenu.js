@@ -1,18 +1,45 @@
 import React from "react";
-import { Menu, Avatar } from "antd";
-import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
-const RightMenu = ({ onVerticalMenu }) => {
-    return (
-        <div onClick={onVerticalMenu}>
-            <div className="right-menu">
-                <div >
-                    <h4 className="username">{window.localStorage.getItem('user')}</h4>
-                    <Avatar icon={<UserOutlined />} />
-                </div>
+import { AppstoreOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
+const items = [
+    {
+        label: 'Hello ' + localStorage.getItem('user'),
+        key: 'introduce',
+        icon: <UserOutlined />,
+        children: [
+            {
+                // type: 'group',
+                label: 'Profile',
+                key: 'profile',
+                icon: <AppstoreOutlined />
+            },
+            {
+                label: 'Log out',
+                key: 'logout',
+                icon: <SettingOutlined />
 
-            </div>
-        </div>
-    );
+            }
+        ]
+    }
+];
+const RightMenu = ({ mode }) => {
+    const logOut = () => {
+        window.localStorage.removeItem('userId')
+        window.localStorage.removeItem('user')
+        window.location.reload();
+    }
+    const onClick = (e) => {
+        const key = e.key
+        switch (key) {
+            case 'logout':
+                logOut()
+                break;
+
+            default:
+                break;
+        }
+    };
+    return <Menu className="right-menu" onClick={onClick} selectedKeys={[]} mode={mode} items={items} sel />;
 };
-
 export default RightMenu;
+

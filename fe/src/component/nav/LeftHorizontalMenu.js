@@ -121,12 +121,12 @@ const items = [
     }
 
 ];
-const LeftMenu = ({ mode }) => {
+const LeftHorizontalMenu = ({ mode }) => {
     const [current, setCurrent] = useState('mail');
     const onClick = (e) => {
         console.log('click ', e);
         setCurrent(e.key);
     };
-    return <Menu onClick={onClick} selectedKeys={[current]} mode={mode} items={items} />;
+    return <Menu className="left-horizontal-menu" onClick={onClick} selectedKeys={[current]} mode={mode} items={items} />;
 };
-export default LeftMenu;
+export default LeftHorizontalMenu;

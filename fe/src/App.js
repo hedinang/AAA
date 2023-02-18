@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { Layout } from 'antd';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Sidebar from './component/Sidebar';
@@ -7,19 +7,23 @@ import './scss/style.scss'
 import './scss/navbar.scss'
 import './scss/login.scss'
 import './scss/chat.scss'
+import './scss/sidebar.scss'
 import { Chat } from './page/Chat';
 import { Login } from './page/Login';
 import { PrivateRoute } from './component/ProtectedRoute';
 import Navbar from './component/nav/NavBar';
-import { useState } from 'react';
 import { CoverLogin } from './component/CoverLogin';
 import { messaging } from './config/config';
 import { getToken } from "firebase/messaging";
 import { updateFirebaseToken } from './api/api';
 
 
+const SideContext = createContext({
+  sideStatus: false,
+  setSideStatus: () => { },
+});
 function App() {
-  const [user, setUser] = useState(localStorage.getItem('user'))
+  const [sideStatus, setSideStatus] = useState(true);
   const checkFirebaseToken = async () => {
     try {
       const token = await getToken(messaging, { vapidKey: process.env.PUBLIC_KEY });
@@ -36,11 +40,11 @@ function App() {
     checkFirebaseToken()
   }, [])
   return (
-    <>
+    <SideContext.Provider value={{ sideStatus: sideStatus, setSideStatus: setSideStatus }}>
       <Layout>
         <Navbar />
         <Layout>
-          <Sidebar></Sidebar>
+          <Sidebar />
           <Routes>
             <Route path='/login' element={
               <CoverLogin>
@@ -57,9 +61,8 @@ function App() {
           </Routes>
         </Layout>
       </Layout>
-    </>
-
+    </SideContext.Provider>
   )
 }
 
-export default App;
+export { App, SideContext };

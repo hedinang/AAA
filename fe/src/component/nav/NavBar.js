@@ -1,77 +1,67 @@
-import React, { useEffect, useState } from "react";
-import { Button, Col, Drawer, Row } from "antd";
+import React, { useContext, useEffect, useState } from "react";
+import { Button, Col, Drawer, Image, Row } from "antd";
 import { Header } from "antd/es/layout/layout";
-import { MenuOutlined } from "@ant-design/icons";
-import { useLocation } from "react-router-dom";
+import { MenuOutlined, PicLeftOutlined, PicRightOutlined } from "@ant-design/icons";
 import LeftMenu from "./LeftMenu";
 import RightMenu from "./RightMenu";
-import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
-import VerticalRightMenu from "./VerticalRightMenu";
+import LeftHorizontalMenu from "./LeftHorizontalMenu";
+import { SideContext } from "../../App";
+import brand from '../../asset/img/header/raccoon1.jpg'
 
 const Navbar = () => {
-    const [visible, setVisible] = useState(false);
-    const [user, setUser] = useState(window.localStorage.getItem('user'))
-    const [verticalMenu, setVerticalMenu] = useState(false)
-    const showDrawer = () => {
-        setVisible(!visible);
+    const { sideStatus, setSideStatus } = useContext(SideContext);
+    const [rightVisible, setRightVisible] = useState(false);
+    const user = localStorage.getItem('user')
+    const showRightDrawer = () => {
+        setRightVisible(!rightVisible);
     };
-    let { pathname: location } = useLocation();
-    useEffect(() => {
-        setVisible(false);
-    }, [location]);
-
-    let onVerticalMenu = () => {
-        setVerticalMenu(!verticalMenu)
+    const toggleCollapsed = () => {
+        setSideStatus(!sideStatus)
     }
     return (
         <>
             {user ?
                 <Header className="nav-header">
                     <Row>
-                        <Col lg={5} span={5}>
-                            <h3>Brand Here</h3>
+                        <Col lg={2} span={1}>
+                            <Button
+                                type="text"
+                                onClick={toggleCollapsed}
+                                className="left-menu-button"
+                            >
+                                <PicLeftOutlined />
+                            </Button>
                         </Col>
-                        <Col lg={15} span={0}>
-                            <LeftMenu mode={"horizontal"} />
+                        <Col lg={4} span={19} className="brand">
+                            <Image
+                                height={46}
+                                src={brand}
+                            />
                         </Col>
-                        <Col lg={0} span={19}>
-                            sssss
+                        <Col lg={15} span={0} >
+                            <LeftHorizontalMenu mode={'horizontal'} />
                         </Col>
-                        <Col lg={4} span={0}>
-                            <RightMenu onVerticalMenu={onVerticalMenu} />
+                        <Col lg={0} span={4}>
+                            <Button className="menuButton" type="text"
+                                onClick={showRightDrawer}
+                            >
+                                <PicRightOutlined />
+                            </Button>
+                        </Col>
+                        <Col lg={3} span={0}>
+                            <RightMenu mode={'horizontal'} />
                         </Col>
                     </Row>
-                    {verticalMenu ? <VerticalRightMenu /> : <></>}
-
-                    {/* <div className="logo">
-                        <h3 className="brand-font">Brand Here</h3>
-                    </div>
-                    <div className="navbar-menu">
-                        <div className="leftMenu">
-                            <LeftMenu mode={"horizontal"} />
-                        </div>
-                        <Button className="menuButton" type="text"
-                            onClick={showDrawer}
-                        >
-                            <MenuOutlined />
-                        </Button>
-                        <div className="rightMenu">
-                            <div style={{ float: 'left', color: 'red' }}>Welcome {window.localStorage.user}</div>
-                            <RightMenu mode={"horizontal"} />
-                        </div>
-
-                        <Drawer
-                            title={"Brand Here"}
-                            placement="right"
-                            closable={true}
-                            onClose={showDrawer}
-                            visible={visible}
-                            style={{ zIndex: 99999 }}
-                        >
-                            <LeftMenu mode={"inline"} />
-                            <RightMenu mode={"inline"} />
-                        </Drawer>
-                    </div> */}
+                    <Drawer
+                        // title="Two-level Drawer"
+                        width={320}
+                        closable={false}
+                        onClose={showRightDrawer}
+                        open={rightVisible}
+                    >
+                        <LeftMenu mode={"inline"} />
+                        <RightMenu mode={'inline'} />
+                    </Drawer>
                 </Header>
                 : <></>}
         </>

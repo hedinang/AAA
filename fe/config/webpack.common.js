@@ -39,10 +39,10 @@ module.exports = {
             },
          },
 
-         {
-            test: /\.(css|s[ac]ss)$/i,
-            use: ["style-loader", "css-loader", "postcss-loader"],
-         },
+         // {
+         //    test: /\.(css|s[ac]ss)$/i,
+         //    use: ["style-loader", "css-loader", "postcss-loader"],
+         // },
          {
             test: /\.svg$/,
             use: [
@@ -53,6 +53,10 @@ module.exports = {
                   },
                },
             ],
+         },
+         {
+            test: /\.s?css$/,
+            use: ['style-loader', 'css-loader', 'sass-loader']
          },
       ],
    },

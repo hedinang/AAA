@@ -8,37 +8,29 @@
   display: grid;
   align-items: center;
 }
-.left-menu {
-  display: flex;
-}
-.menu-item {
-  margin-left: 10px;
-}
-.right-menu {
+.menuButton {
   float: right;
 }
-.username {
-  margin-right: 10px;
-  float: left;
+.nav-header ul {
+  margin-top: 8px;
+  height: 100%;
 }
-.right-down {
-  margin-top: 50%;
-  transform: translateY(-50%);
+li::after {
+  border-bottom-color: white !important;
 }
-.vertical-menu {
-  position: absolute;
-  top: 62px;
-  right: 50px;
-  background-color: white;
-  color: black;
-  width: 150px;
-  height: 150px;
-  z-index: 1;
-  box-shadow: 0 6px 10px 5px #888888;
-  border-radius: 5px;
-  font-size: 17px;
+li .ant-menu-title-content,
+.ant-menu-item-icon {
+  font-size: 17px !important;
 }
-.vertical-item {
-  margin-bottom: 15px;
-  margin-left: 15px;
+.ant-menu > ul > li:active {
+  background-color: #1677ff !important;
+}
+
+.left-horizontal-menu {
+  // display: flex;
+  justify-content: center;
+}
+.brand {
+  justify-content: center;
+  display: flex;
 }
